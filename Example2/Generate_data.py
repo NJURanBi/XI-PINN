@@ -199,10 +199,13 @@ def get_u_n(data):
     return u_n[:, None]
 
 def get_normal_vector(data):
-    l = len(data[:, 0])
-    n1 = np.random.uniform(low=-1, high=1, size=l)
-    n2 = np.random.uniform(low=-1, high=1, size=l)
-    n3 = np.random.uniform(low=-1, high=1, size=l)
+    x = data[:, 0]
+    y = data[:, 1]
+    z = data[:, 2]
+    t = data[:, 3]
+    n1 = 2 * np.cos(np.pi * t / 2) * (x * np.cos(np.pi * t / 2) + y * np.sin(np.pi * t / 2)) / 0.7**2 - 2 * np.sin(np.pi * t / 2) * (-x * np.sin(np.pi * t / 2) + y * np.cos(np.pi * t / 2)) / 0.5**2
+    n2 = 2 * np.sin(np.pi * t / 2) * (x * np.cos(np.pi * t / 2) + y * np.sin(np.pi * t / 2)) / 0.7**2 + 2 * np.cos(np.pi * t / 2) * (-x * np.sin(np.pi * t / 2) + y * np.cos(np.pi * t / 2)) / 0.5**2
+    n3 = 2 * (z - 0.5 * t + 0.25) / 0.5**2
     s = np.sqrt(n1**2 + n2**2 + n3**2)
     n1 = n1 / s
     n2 = n2 / s
@@ -300,5 +303,6 @@ def generate_train_data(num_op, num_on, num_ini, num_b, num_if, device):
     data_tr_if_n = (xifp, xifn, nor, psi)
 
     return data_tr_op, data_tr_on, data_tr_b, data_tr_if_d, data_tr_if_n, data_tr_ini
+
 
 
